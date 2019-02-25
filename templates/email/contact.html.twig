@@ -8,28 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Test Com to code</title>
+    <title>Formulaire de contact</title>
   </head>
   <body>
-  	<ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">Accueil</a>
-      </li>
-      {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('formulaire') }}">Formulaire</a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('fos_user_registration_register') }}">Enregistrer</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('fos_user_security_login') }}">Connexion</a>
-      </li>
-       {% endif %}
-	</ul>
-    <h1>Test Com to Code</h1>
-	
+    <h1>Recapitulatif</h1>
+    
+    <p>Prenom : {{ infoEmail.firstname }} Nom : {{ infoEmail.name }} vous a envoyé un email à partir de l'adresse mail :  {{ infoEmail.email }} dont voici le message</p>
+    <p>Message : {{ infoEmail.message }}</p>
+    <p> Vous pouvez le joindre également par téléphone : {{ infoEmail.phoneNumber }}
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
