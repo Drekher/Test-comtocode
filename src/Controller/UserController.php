@@ -18,17 +18,17 @@ class UserController extends AbstractController
     function formulaire(Request $request, \Swift_Mailer $mailer)
     {        
         
-        // on recupere les informations de contact 
+        // on recupere les informations de contact stocké en session. 
         $infoUser = $this->getUser();
         
-        
+        // on crée le formulaire grace à l'entité crée. 
         $contact = new Contact();
         $form = $this->createFormBuilder($contact)
         ->add('first_name', TextType::class, [
             'label' => 'Prenom',
             'data' => $infoUser->getFirstName(),
             'constraints' => [ 
-                new NotBlank([ 'message' => 'Vous devez reserver au moins une place']),
+                new NotBlank([ 'message' => 'Votre prenom ne peut pas être vide']),
                 new Length( [
                     'max' => 255,
                     'maxMessage' => 'Votre prénom ne peut contenir plus de 255 caractères'
@@ -39,7 +39,7 @@ class UserController extends AbstractController
                 'label' => 'Nom',
                 'data' => $infoUser->getName(),
                 'constraints' => [
-                    new NotBlank([ 'message' => 'Vous devez reserver au moins une place']),
+                    new NotBlank([ 'message' => 'Votre nom ne doit pas être vide']),
                     new Length( [
                         'max' => 255,
                         'maxMessage' => 'Votre nom ne peut contenir plus de 255 caractères'
@@ -62,27 +62,30 @@ class UserController extends AbstractController
             'label' => 'Courriel',
             'data' => $infoUser->getEmail(),
             'constraints' => [
-                new NotBlank([ 'message' => 'Vous devez reserver au moins une place']),
+                new NotBlank([ 'message' => 'Vous email ne peut pas être vide']),
                 new Email(['message' => 'L\'adresse email saisie est invalide'])
             ]
         ])
         ->add('message', TextareaType::class, [
             'constraints' => [
-                new NotBlank([ 'message' => 'Vous devez reserver au moins une place'])
+                new NotBlank([ 'message' => 'Votre message ne peux pas être vide.'])
             ]
         ])
         ->add('Envoyer', SubmitType::class)
         ->getForm();
         
-        
+        // on recupère les informations envoyés au formulaire
         $form->handleRequest($request);
+        // on verifie que ça a été envoyé et que le formulaire soit valide. 
         if ($form->isSubmitted() && $form->isValid())
         {
+            // recupération des informations dans la balise infoForm
             $infoForm = $form->getData(); 
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
             $em->flush();
+            // enregistrement en BDD 
             
             // envoi du mail 
             
@@ -100,8 +103,8 @@ class UserController extends AbstractController
             $mailer->send($courriel);
             
             
-
-            return $this->redirectToRoute('formulaire');
+            // on redirige vers la page de formulaire. 
+            return $this->redirectToRoute('formulaire', ['succes' => 'yes']);
          
         }
         

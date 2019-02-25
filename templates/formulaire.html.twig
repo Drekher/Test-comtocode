@@ -19,6 +19,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ url('formulaire') }}">Formulaire</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url('fos_user_security_logout') }}">Deconnexion</a>
+      </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{{ url('fos_user_registration_register') }}">Enregistrer</a>
@@ -29,6 +32,10 @@
        {% endif %}
 	</ul>
     <h1>Formulaire - Com to Code</h1>
+    <!-- Envoi un message de confirmation de réussite. -->
+    {% if app.request.get('succes') == 'yes' %}
+    	<p class="alert alert-success"> Le formulaire a bien été envoyé </p>
+    {% endif %}
      {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
          {{ form_start(form) }}
         {{ form_widget(form) }}
