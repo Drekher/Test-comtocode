@@ -13,7 +13,7 @@
   <body>
   	<ul class="nav">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Accueil</a>
+        <a class="nav-link active" href="{{ url('index') }}">Accueil</a>
       </li>
       {%  if is_granted('IS_AUTHENTICATED_FULLY') %}
       <li class="nav-item">
