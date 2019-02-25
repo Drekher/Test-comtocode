@@ -5,4 +5,7 @@ fos_user:
     from_email:
         address: "bertrand.fernandez@gmail.com"
         sender_name: "bertrand.fernandez@gmail.com"
+    registration:
+      form:
+        type:    App\AppBundle\Form\RegistrationFormType 
  
